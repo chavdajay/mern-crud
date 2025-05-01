@@ -1,14 +1,18 @@
 import React from 'react';
 import { deleteUser } from '../api';
 
-const UserList = ({ users, setUsers }) => {
+const UserList = ({ users, setUsers, setEditingUser }) => {
   const handleDelete = async (id) => {
     try {
-      await deleteUser(id); // Delete user via API
-      setUsers(users.filter((user) => user._id !== id)); // Immediately update state
+      await deleteUser(id);
+      setUsers(users.filter((user) => user._id !== id));
     } catch (err) {
       console.error('Error deleting user:', err);
     }
+  };
+
+  const handleEdit = (user) => {
+    setEditingUser(user); // set full user object
   };
 
   return (
@@ -17,9 +21,9 @@ const UserList = ({ users, setUsers }) => {
       <table className="table table-striped table-hover">
         <thead className="table-dark">
           <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Email</th>
-            <th scope="col">Actions</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th style={{ width: '160px' }}>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -30,7 +34,7 @@ const UserList = ({ users, setUsers }) => {
               <td>
                 <button
                   className="btn btn-sm btn-warning me-2"
-                  onClick={() => alert('Edit functionality is not implemented yet!')}
+                  onClick={() => handleEdit(user)}
                 >
                   Edit
                 </button>
