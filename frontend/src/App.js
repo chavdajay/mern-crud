@@ -5,8 +5,8 @@ import { fetchUsers } from './api';
 
 const App = () => {
   const [users, setUsers] = useState([]);
+  const [editingUser, setEditingUser] = useState(null);
 
-  // Fetch users once when the component mounts
   useEffect(() => {
     const getUsers = async () => {
       const data = await fetchUsers();
@@ -18,8 +18,16 @@ const App = () => {
   return (
     <div className="container">
       <h1 className="text-center my-4">User Management</h1>
-      <AddUser setUsers={setUsers} />
-      <UserList users={users} setUsers={setUsers} />
+      <AddUser
+       setUsers={setUsers}
+        editingUser={editingUser}
+        setEditingUser={setEditingUser}
+      />
+      <UserList
+        users={users}
+        setUsers={setUsers}
+        setEditingUser={setEditingUser}
+      />
     </div>
   );
 };
